@@ -16,6 +16,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Caveat:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
+  /* ponytail: convite assume um único tema quente (papel) de propósito — toda cor pintada explicitamente */
   :root{
     --paper:#EAE0C7; --card:#FBF6EA; --card-edge:#E4D8BC;
     --ink:#4A3B2A; --ink-soft:#8A7454;
@@ -34,6 +35,7 @@
     outline:2px solid var(--focus); outline-offset:2px; border-radius:8px;
   }
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
   #card{
     position:relative; width:100%; max-width:452px; overflow:hidden;
     padding:26px 20px 22px;
@@ -46,7 +48,10 @@
   .sprig-br{bottom:-18px; right:-16px; transform:rotate(170deg)}
   .panel{position:relative; z-index:1}
   .wrap{display:flex; flex-direction:column; gap:22px}
+  /* mobile: os wrappers de coluna somem e as seções fluem direto na .wrap */
   .cols,.col-a,.col-b{display:contents}
+
+  /* hero */
   .hero{display:flex; flex-direction:column; align-items:center; gap:4px; text-align:center}
   .badge{
     width:94px; height:94px; margin-bottom:4px; border-radius:50%;
@@ -72,17 +77,21 @@
     background:#F0E4CE; border:1px solid var(--card-edge);
     font:700 13px/1 Nunito,sans-serif; letter-spacing:.03em; color:var(--sage-deep);
   }
+
+  /* facts */
   .facts{display:grid; grid-template-columns:repeat(3,1fr)}
   .fact{padding:2px 8px; text-align:center; display:flex; flex-direction:column; gap:3px}
   .fact + .fact{border-left:1px solid var(--card-edge)}
   .fact b{font:600 22px/1.05 Fraunces,Georgia,serif; color:var(--terra); overflow-wrap:anywhere}
   .fact.v b{font-size:16px}
   .fact small{font:400 11.5px/1.25 Nunito,sans-serif; color:var(--ink-soft)}
+
+  /* sections */
   .stitle{
     display:flex; align-items:center; justify-content:center; gap:10px; margin:0 0 12px;
     font:600 14px/1 Nunito,sans-serif; letter-spacing:.09em; text-transform:uppercase; color:var(--sage-deep);
   }
-  .stitle::before,.stitle::after{content:"\2665"; color:var(--terra-pale); font-size:12px}
+  .stitle::before,.stitle::after{content:"♥"; color:var(--terra-pale); font-size:12px}
   .txt{font:400 14.5px/1.55 Nunito,sans-serif; color:var(--ink); text-align:center; margin:0 auto 12px; max-width:37ch}
   .cap{font:400 12.5px/1.45 Nunito,sans-serif; color:var(--ink-soft); text-align:center; margin-top:8px}
   .hint{font:400 11.5px/1.35 Nunito,sans-serif; color:var(--ink-soft)}
@@ -90,6 +99,8 @@
   .seg-btn{flex:1; padding:10px 8px; border:0; background:transparent; cursor:pointer; font:600 14px/1 Nunito,sans-serif; color:var(--ink-soft)}
   .seg-btn + .seg-btn{border-left:1px solid var(--card-edge)}
   .seg-btn.is-on{background:var(--sage-deep); color:#FBF6EA}
+
+  /* forms */
   .gate-form{display:flex; flex-direction:column; gap:14px; margin-top:18px}
   .rsvp{
     background:linear-gradient(#E7EACF,#EFEAD6); border:1px solid #CDD4B0; border-radius:18px;
@@ -109,6 +120,8 @@
     font:600 15px/1.4 Nunito,sans-serif; color:var(--sage-deep);
   }
   .err{min-height:1em; font:600 13px/1.3 Nunito,sans-serif; color:var(--terra); margin:0}
+
+  /* buttons */
   .btn{
     display:inline-flex; align-items:center; justify-content:center; gap:8px; text-align:center;
     padding:13px 18px; border-radius:999px; border:1.5px solid transparent; cursor:pointer;
@@ -123,6 +136,8 @@
   .btn-outline:hover{background:#EDEFDD}
   .btn-ghost{background:transparent; color:var(--terra); padding:8px 12px; font-weight:600}
   .btn-ghost:hover{text-decoration:underline}
+
+  /* tamanho reservado */
   .tamBox{
     background:linear-gradient(#E7EACF,#EFEAD6); border:1px solid #CDD4B0; border-radius:18px;
     padding:18px 16px; display:flex; flex-direction:column; align-items:center; gap:9px; text-align:center;
@@ -139,14 +154,18 @@
     font:700 13px/1 Fraunces,Georgia,serif; color:var(--ink-soft);
   }
   .scl.on{border-color:var(--terra); background:#F6E3D9; color:var(--terra)}
+
   .pix{margin-top:14px; padding-top:14px; border-top:1px dashed var(--card-edge); display:flex; flex-direction:column; gap:10px}
   .pixkey{
     font:600 13px/1.4 ui-monospace,"Cascadia Code",Consolas,monospace; color:var(--sage-deep);
     background:#EFEAD6; border:1px dashed #C3CBA6; border-radius:10px;
     padding:10px 12px; text-align:center; word-break:break-all; user-select:all;
   }
+
   .foot{text-align:center; font:600 22px/1.3 Caveat,"Segoe Script",cursive; color:var(--sage-deep); margin:0}
   .foot .h{color:var(--terra)}
+
+  /* desktop: convite abre em duas colunas */
   @media (min-width:820px){
     #card.wide{max-width:900px; padding:36px 46px 32px}
     #card.wide .cols{display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr); gap:34px; align-items:start}
@@ -183,6 +202,8 @@
       <ellipse cx="41" cy="79" rx="11" ry="5.5" transform="rotate(-58 41 79)"/>
     </g>
   </svg>
+
+  <!-- ENTRAR -->
   <section id="gate" class="panel">
     <div class="hero">
       <div class="badge"><span class="crown" aria-hidden="true">👑</span><span aria-hidden="true">🦁</span></div>
@@ -204,6 +225,8 @@
       <p class="cap">Não encontrou pelo primeiro nome? Digite o nome completo, igual ao do convite.</p>
     </form>
   </section>
+
+  <!-- CONVITE -->
   <section id="invite" class="panel" hidden>
     <div class="wrap">
       <div class="hero">
@@ -214,12 +237,15 @@
         <div class="rule" aria-hidden="true">♥</div>
         <p class="lede">Nosso pequeno está chegando e queremos você ao nosso lado nesse dia especial. Contamos com a sua presença!</p>
         <div class="cd" id="cd">Faltam poucos dias 🦁</div>
+        <p class="cap" style="margin-top:6px">Confirme sua presença até <strong>17 de setembro</strong> 💛</p>
       </div>
+
       <div class="facts">
         <div class="fact"><b>17</b><small>Outubro · sábado</small></div>
         <div class="fact v"><b>Chácara Fest</b><small>Fantasia</small></div>
         <div class="fact"><b>13h</b><small>horário</small></div>
       </div>
+
       <div class="cols">
         <div class="col-a">
           <section>
@@ -257,6 +283,7 @@
             </form>
           </section>
         </div>
+
         <div class="col-b">
           <section>
             <h2 class="stitle">A fralda da sua família</h2>
@@ -266,6 +293,7 @@
               <div class="scale" id="scale"></div>
             </div>
           </section>
+
           <section>
             <h2 class="stitle">Presentear o Eduardo</h2>
             <p class="txt">A lista está na <strong>Fralda e Cia</strong>. A partir de <strong>30 de setembro</strong> também haverá uma lista presencial na loja.</p>
@@ -276,21 +304,31 @@
               <button type="button" class="btn btn-outline btn-full" id="btnPix">Copiar chave Pix</button>
             </div>
           </section>
+
           <section>
             <h2 class="stitle">Como chegar</h2>
             <p class="txt"><strong>Chácara Fest</strong> · Espaço <strong>Fantasia</strong> (a chácara tem dois espaços — o nosso é o Fantasia). Toque abaixo para abrir no mapa.</p>
             <a class="btn btn-outline btn-full" id="btnMap" target="_blank" rel="noopener">📍 Ver no Google Maps</a>
           </section>
+
+          <section>
+            <h2 class="stitle">Fotos do dia</h2>
+            <p class="txt">No dia do evento, as fotos que você tirar com carinho podem ser enviadas para o link abaixo, para que o pequeno Eduardo tenha essa recordação de todos que o amam. 💛</p>
+            <a class="btn btn-primary btn-full" href="https://drive.google.com/drive/folders/1S8P5Zv9zfreuqTcIt2hN86K9Tf-QBGOt?usp=sharing" target="_blank" rel="noopener">📸 Enviar fotos</a>
+          </section>
         </div>
       </div>
+
       <p class="foot">Com muito carinho,<br>nosso pequeno já conta com você! <span class="h">♥</span></p>
     </div>
   </section>
 </div>
+
 <script>
   document.documentElement.lang = "pt-BR";
   const $ = (id) => document.getElementById(id);
   const LSKEY = "cha-eduardo:familia";
+
   const q = new URLSearchParams(location.search);
   const CONTATOS = [
     { nome: "Leandro", zap: "5518996069879" },
@@ -301,32 +339,79 @@
     local: "Chácara Fest — Espaço Fantasia",
     mapa: "https://maps.app.goo.gl/EFTYpVYvFCFrNEpv6",
     quando: "2026-10-17T13:00:00-03:00",
+
+    // ponytail: confirmação que escreve DIRETO na planilha, via Apps Script Web App.
+    // Cole a URL /exec aqui, ou passe ?api=... na URL do site. Vazio = usa Formulário/WhatsApp.
     script: q.get("api") || "",
-    form: { base: "", campos: { familia: "", nome: "", email: "", confirmacao: "", pessoas: "", fralda: "", recado: "" } },
+
+    // Alternativa: Google Formulário ligado à planilha (deixe `base` vazio para não usar).
+    form: {
+      base: "", // ex.: https://docs.google.com/forms/d/e/AAAA/viewform?usp=pp_url
+      campos: { familia: "", nome: "", email: "", confirmacao: "", pessoas: "", fralda: "", recado: "" },
+    },
   };
+
+  // ponytail: uma linha por família, exatamente como está escrito no convite.
+  // A pessoa faz login digitando o nome (casa por qualquer primeiro nome, sem acento/maiúscula).
+  // tamanho: "RN"|"P"|"M"|"G"|"XG"|"mimo". Opcional por família: pessoas (senão é estimado pelo nome).
   const FAMILIAS = {
-    "Arthur e Karen": { tamanho: "G" }, "Michele": { tamanho: "G" }, "Oswaldo e Marcela": { tamanho: "P" },
-    "Vitor e Camila": { tamanho: "P" }, "Dinho e Fernanda": { tamanho: "XG" }, "Aristide e Dani": { tamanho: "P" },
-    "Felipe": { tamanho: "P" }, "Vô Angelo e Vó Rose": { tamanho: "P" }, "Wilson, Carol, Antonella e Neto": { tamanho: "P" },
-    "Bisa Lina": { tamanho: "RN" }, "Biso Dino e Bisa Lidia": { tamanho: "RN" }, "Vô Eraldo e Vó Luiza": { tamanho: "M" },
-    "Beatriz e Bruno": { tamanho: "M" }, "Fabiano e Renata": { tamanho: "M" }, "Guilherme e Juliana": { tamanho: "M" },
-    "Neja, Ana e Amanda": { tamanho: "M" }, "João e Mari": { tamanho: "M" }, "Fabio e Amanda": { tamanho: "XG" },
-    "Daniel": { tamanho: "M" }, "Everton": { tamanho: "M" }, "Ricardo e Nicole": { tamanho: "M" },
-    "Marco, Luciana e Vó": { tamanho: "M" }, "Rafa e Juninho": { tamanho: "M" }, "Gabriel e Camila": { tamanho: "G" },
-    "Raiany e Manu": { tamanho: "G" }, "João e Raileny": { tamanho: "G" }, "Mario e Ranali": { tamanho: "G" },
-    "Juan": { tamanho: "P" }, "Júlia e Antony": { tamanho: "P" }, "Luis e Anna": { tamanho: "G" },
-    "Rafael e Thyago": { tamanho: "G" }, "Camila e Raphael": { tamanho: "G" }, "Bruna Coleti": { tamanho: "G" },
-    "Jaque e Família": { tamanho: "G" }, "Gisele Facchim e Família": { tamanho: "G" }, "Neto e Ana Maria": { tamanho: "G" },
-    "Amanda Pimenta e Família": { tamanho: "G" }, "Tia Gisele": { tamanho: "G" }, "Lívia Santi": { tamanho: "P" },
-    "Vitor e Bruna": { tamanho: "XG" }, "Fabio e Adriele": { tamanho: "M" }, "Tim e Ana": { tamanho: "XG" },
-    "Aline e Gil": { tamanho: "M" }, "Anathiele e Familia": { tamanho: "G" },
+    "Arthur e Karen": { tamanho: "G" },
+    "Michele": { tamanho: "G" },
+    "Oswaldo e Marcela": { tamanho: "P" },
+    "Vitor e Camila": { tamanho: "P" },
+    "Dinho e Fernanda": { tamanho: "XG" },
+    "Aristide e Dani": { tamanho: "P" },
+    "Felipe": { tamanho: "P" },
+    "Vô Angelo e Vó Rose": { tamanho: "P" },
+    "Wilson, Carol, Antonella e Neto": { tamanho: "P" },
+    "Bisa Lina": { tamanho: "RN" },
+    "Biso Dino e Bisa Lidia": { tamanho: "RN" },
+    "Vô Eraldo e Vó Luiza": { tamanho: "M" },
+    "Beatriz e Bruno": { tamanho: "M" },
+    "Fabiano e Renata": { tamanho: "M" },
+    "Guilherme e Juliana": { tamanho: "M" },
+    "Neja, Ana e Amanda": { tamanho: "M" },
+    "João e Mari": { tamanho: "M" },
+    "Fabio e Amanda": { tamanho: "XG" },
+    "Daniel": { tamanho: "M" },
+    "Everton": { tamanho: "M" },
+    "Ricardo e Nicole": { tamanho: "M" },
+    "Marco, Luciana e Vó": { tamanho: "M" },
+    "Rafa e Juninho": { tamanho: "M" },
+    "Gabriel e Camila": { tamanho: "G" },
+    "Raiany e Manu": { tamanho: "G" },
+    "João e Raileny": { tamanho: "G" },
+    "Mario e Ranali": { tamanho: "G" },
+    "Juan": { tamanho: "P" },
+    "Júlia e Antony": { tamanho: "P" },
+    "Luis e Anna": { tamanho: "G" },
+    "Rafael e Thyago": { tamanho: "G" },
+    "Camila e Raphael": { tamanho: "G" },
+    "Bruna Coleti": { tamanho: "G" },
+    "Jaque e Família": { tamanho: "G" },
+    "Gisele Facchim e Família": { tamanho: "G" },
+    "Neto e Ana Maria": { tamanho: "G" },
+    "Amanda Pimenta e Família": { tamanho: "G" },
+    "Tia Gisele": { tamanho: "G" },
+    "Lívia Santi": { tamanho: "P" },
+    "Vitor e Bruna": { tamanho: "XG" },
+    "Fabio e Adriele": { tamanho: "M" },
+    "Tim e Ana": { tamanho: "XG" },
+    "Aline e Gil": { tamanho: "M" },
+    "Anathiele e Familia": { tamanho: "G" },
   };
+
   const TAM = { RN: "recém-nascido", P: "pequeno", M: "médio", G: "grande", XG: "extra grande", mimo: "vai de mimo" };
   const ORDEM = ["RN", "P", "M", "G", "XG"];
+
   let estado = { familia: "", tamanho: "M", pessoas: 1, email: "", digitado: "" };
+
   const CONECTORES = new Set(["e", "de", "da", "do", "dos", "das", "a", "o", "&"]);
   const norm = (s) => (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/\s+/g, " ").trim();
   const tokens = (s) => norm(s).split(/[^a-z0-9]+/).filter((t) => t && !CONECTORES.has(t));
+
+  // Casa o que a pessoa digitou com um nome da lista, sem revelar a lista.
+  // "ok" (achou 1) | "nao_achou" (0) | "ambiguo" (>1, pede nome completo) | "vazio"
   function acharFamilia(input) {
     const it = tokens(input);
     if (!it.length) return { status: "vazio" };
@@ -342,50 +427,83 @@
     if (matches.length === 0) return { status: "nao_achou" };
     return { status: "ambiguo" };
   }
+
   function rsvpMessage(e, pessoas, recado) {
     const linhas = ["Oi! Confirmo presença no chá de fraldas do Eduardo 🦁"];
     linhas.push("Convite: " + e.familia);
     if (e.digitado && norm(e.digitado) !== norm(e.familia)) linhas.push("Nome informado: " + e.digitado);
     if (e.email) linhas.push("E-mail: " + e.email);
     linhas.push("Vamos em " + pessoas + " pessoa(s)");
-    linhas.push(e.tamanho === "mimo" ? "Vamos de mimo 💛" : "Fralda combinada: " + e.tamanho + " (" + (TAM[e.tamanho] || "") + ")");
+    linhas.push(e.tamanho === "mimo"
+      ? "Vamos de mimo 💛"
+      : "Fralda combinada: " + e.tamanho + " (" + (TAM[e.tamanho] || "") + ")");
     if (recado) linhas.push("Recadinho: " + recado);
     return linhas.join("\n");
   }
+
   function declineMessage(e) {
-    return "Oi! " + e.familia + " infelizmente não vai conseguir ir ao chá de fraldas do Eduardo, mas manda um carinho de longe 💛" + (e.email ? "\nE-mail: " + e.email : "");
+    return "Oi! " + e.familia + " infelizmente não vai conseguir ir ao chá de fraldas do Eduardo, mas manda um carinho de longe 💛"
+      + (e.email ? "\nE-mail: " + e.email : "");
   }
-  function waUrl(text, zap) { return "https://wa.me/" + (zap || CONTATOS[contatoIdx].zap) + "?text=" + encodeURIComponent(text); }
+
+  function waUrl(text, zap) {
+    return "https://wa.me/" + (zap || CONTATOS[contatoIdx].zap) + "?text=" + encodeURIComponent(text);
+  }
+
+  // Link do Google Formulário preenchido (cai na planilha). null se não configurado -> usa WhatsApp.
   function formUrl(e, vai, pessoas, recado) {
     const f = CONFIG.form;
     if (!f || !f.base) return null;
     const p = new URLSearchParams();
     const put = (id, val) => { if (id && val !== "" && val != null) p.set(id, val); };
-    put(f.campos.familia, e.familia); put(f.campos.nome, e.digitado); put(f.campos.email, e.email);
-    put(f.campos.confirmacao, vai ? "Confirmado" : "Não vai"); put(f.campos.pessoas, vai ? pessoas : 0);
-    put(f.campos.fralda, e.tamanho === "mimo" ? "Mimo" : e.tamanho); put(f.campos.recado, recado);
+    put(f.campos.familia, e.familia);
+    put(f.campos.nome, e.digitado);
+    put(f.campos.email, e.email);
+    put(f.campos.confirmacao, vai ? "Confirmado" : "Não vai");
+    put(f.campos.pessoas, vai ? pessoas : 0);
+    put(f.campos.fralda, e.tamanho === "mimo" ? "Mimo" : e.tamanho);
+    put(f.campos.recado, recado);
     return f.base + (f.base.indexOf("?") >= 0 ? "&" : "?") + p.toString();
   }
+
   const usaForm = () => !!(CONFIG.form && CONFIG.form.base);
+
+  // Confirmação que grava direto na planilha (Apps Script Web App). null se não configurado.
   function scriptUrl(e, vai, pessoas, recado) {
     if (!CONFIG.script) return null;
     const p = new URLSearchParams({
       familia: e.familia, nome: e.digitado || "", email: e.email || "",
-      status: vai ? "OK" : "NAO", pessoas: String(vai ? pessoas : 0), fralda: e.tamanho, recado: recado || "",
+      status: vai ? "OK" : "NAO", pessoas: String(vai ? pessoas : 0),
+      fralda: e.tamanho, recado: recado || "",
     });
     return CONFIG.script + (CONFIG.script.indexOf("?") >= 0 ? "&" : "?") + p.toString();
   }
+
   const online = () => !!CONFIG.script || usaForm();
-  function mapsUrl() { return CONFIG.mapa || "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(CONFIG.local); }
-  function contaPessoas(nome) { return Math.min(30, nome.split(/\s+e\s+|,\s*/).filter(Boolean).length) || 1; }
-  function diasRestantes(now) { return Math.ceil((new Date(CONFIG.quando) - (now || new Date())) / 86400000); }
+
+  function mapsUrl() {
+    return CONFIG.mapa || "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(CONFIG.local);
+  }
+
+  // ponytail: chute do nº de pessoas a partir do nome ("Nome e Nome" -> 2); a família ajusta no campo
+  function contaPessoas(nome) {
+    return Math.min(30, nome.split(/\s+e\s+|,\s*/).filter(Boolean).length) || 1;
+  }
+
+  function diasRestantes(now) {
+    return Math.ceil((new Date(CONFIG.quando) - (now || new Date())) / 86400000);
+  }
+
   function textoContagem(d) {
     if (d > 1) return "Faltam " + d + " dias 🦁";
     if (d === 1) return "É amanhã! 🦁";
     if (d === 0) return "É hoje! 🎉";
     return "Obrigado por celebrar com a gente 💛";
   }
+
+  // ponytail: o nº combinado é o teto — a família só reduz (alguém não vai), nunca aumenta
   const limitaPessoas = (raw, teto) => Math.min(teto, Math.max(1, raw || teto));
+
   function syncLinks() {
     const raw = parseInt($("pessoas").value, 10);
     if (raw > estado.pessoas) $("pessoas").value = estado.pessoas;
@@ -395,38 +513,62 @@
     $("btnConfirm").href = scriptUrl(estado, true, p, recado) || formUrl(estado, true, p, recado) || waUrl(rsvpMessage(estado, p, recado));
     $("btnDecline").href = scriptUrl(estado, false, 0, "") || formUrl(estado, false, 0, "") || waUrl(declineMessage(estado));
   }
+
   function renderScale(t) {
-    const box = $("scale"); box.innerHTML = "";
+    const box = $("scale");
+    box.innerHTML = "";
     if (t === "mimo") { box.hidden = true; return; }
     box.hidden = false;
     ORDEM.forEach((s) => {
       const el = document.createElement("span");
-      el.className = "scl" + (s === t ? " on" : ""); el.textContent = s; box.appendChild(el);
+      el.className = "scl" + (s === t ? " on" : "");
+      el.textContent = s;
+      box.appendChild(el);
     });
   }
+
   function abrirConvite(name, email, digitado) {
     const info = FAMILIAS[name];
     if (!info) return;
     const t = TAM[info.tamanho] ? info.tamanho : "M";
-    estado = { familia: name, tamanho: t, pessoas: Math.min(30, Math.max(1, info.pessoas || contaPessoas(name))), email: email || "", digitado: digitado || name };
+    estado = {
+      familia: name, tamanho: t,
+      pessoas: Math.min(30, Math.max(1, info.pessoas || contaPessoas(name))),
+      email: email || "", digitado: digitado || name,
+    };
+
     $("greetFam").textContent = name;
     $("nome").value = digitado && norm(digitado) !== norm(name) ? digitado : "";
     $("nome").placeholder = name;
     $("pessoas").value = estado.pessoas;
     $("pessoas").max = estado.pessoas;
-    $("pessoasHint").textContent = estado.pessoas > 1 ? "combinado: " + estado.pessoas + " — reduza se alguém não puder ir" : "convite para 1 pessoa";
+    $("pessoasHint").textContent = estado.pessoas > 1
+      ? "combinado: " + estado.pessoas + " — reduza se alguém não puder ir"
+      : "convite para 1 pessoa";
     $("tamFix").textContent = t === "mimo" ? "Vão de mimo 💛" : t + " — " + TAM[t];
     $("tamBig").textContent = t === "mimo" ? "💛" : t;
-    $("tamCap").textContent = t === "mimo" ? "Sua família vai de mimo — veja a sugestão de presente abaixo." : "Tamanho " + TAM[t] + " — reservado para a sua família.";
-    renderScale(t); syncLinks();
-    $("gate").hidden = true; $("invite").hidden = false; $("card").classList.add("wide");
+    $("tamCap").textContent = t === "mimo"
+      ? "Sua família vai de mimo — veja a sugestão de presente abaixo."
+      : "Tamanho " + TAM[t] + " — reservado para a sua família.";
+    renderScale(t);
+    syncLinks();
+
+    $("gate").hidden = true;
+    $("invite").hidden = false;
+    $("card").classList.add("wide");
   }
+
   function voltarGate() {
     try { localStorage.removeItem(LSKEY); } catch (_) {}
-    $("invite").hidden = true; $("gate").hidden = false; $("card").classList.remove("wide");
+    $("invite").hidden = true;
+    $("gate").hidden = false;
+    $("card").classList.remove("wide");
     $("gnome").value = ""; $("gemail").value = ""; $("gateErr").textContent = "";
   }
+
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  // --- montagem ---
   $("gateForm").addEventListener("submit", (e) => {
     e.preventDefault();
     const digitado = $("gnome").value.trim();
@@ -434,14 +576,22 @@
     if (!digitado) { $("gateErr").textContent = "Digite seu nome."; return; }
     if (!EMAIL_RE.test(email)) { $("gateErr").textContent = "Digite um e-mail válido."; return; }
     const r = acharFamilia(digitado);
-    if (r.status === "ambiguo") { $("gateErr").textContent = "Há mais de um convite com esse nome. Digite o nome completo, como está no convite."; return; }
-    if (r.status !== "ok") { $("gateErr").textContent = "Não encontramos esse nome na lista de convidados. Confira como está escrito no seu convite."; return; }
+    if (r.status === "ambiguo") {
+      $("gateErr").textContent = "Há mais de um convite com esse nome. Digite o nome completo, como está no convite.";
+      return;
+    }
+    if (r.status !== "ok") {
+      $("gateErr").textContent = "Não encontramos esse nome na lista de convidados. Confira como está escrito no seu convite.";
+      return;
+    }
     $("gateErr").textContent = "";
     abrirConvite(r.nome, email, digitado);
     try { localStorage.setItem(LSKEY, JSON.stringify({ familia: r.nome, email: email, digitado: digitado })); } catch (_) {}
   });
+
   $("trocar").addEventListener("click", (e) => { e.preventDefault(); voltarGate(); });
   $("form").addEventListener("input", syncLinks);
+
   document.querySelectorAll("#seg .seg-btn").forEach((b) => {
     b.addEventListener("click", () => {
       contatoIdx = Number(b.dataset.i) || 0;
@@ -449,27 +599,90 @@
       syncLinks();
     });
   });
+
   if (online()) {
     $("btnConfirm").textContent = "Confirmar presença";
     $("contatoWrap").hidden = true;
-    $("rsvpCap").textContent = CONFIG.script ? "Ao confirmar, sua resposta vai direto para a organização. Pode fechar a aba que abrir." : "Ao confirmar, abrimos o formulário já preenchido para você revisar e enviar.";
+    $("rsvpCap").textContent = CONFIG.script
+      ? "Ao confirmar, sua resposta vai direto para a organização. Pode fechar a aba que abrir."
+      : "Ao confirmar, abrimos o formulário já preenchido para você revisar e enviar.";
   } else {
     $("btnConfirm").textContent = "Confirmar no WhatsApp";
     $("rsvpCap").textContent = "Ao confirmar, abrimos uma mensagem pronta no WhatsApp de quem você escolher acima.";
   }
+
   $("btnMap").href = mapsUrl();
   $("cd").textContent = textoContagem(diasRestantes());
+
   $("btnPix").addEventListener("click", async () => {
     const chave = $("pixkey").textContent.trim();
     let copiou = false;
     try { await navigator.clipboard.writeText(chave); copiou = true; } catch (_) {}
-    if (!copiou) { const r = document.createRange(); r.selectNodeContents($("pixkey")); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); }
+    if (!copiou) {
+      const r = document.createRange(); r.selectNodeContents($("pixkey"));
+      const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    }
     $("btnPix").textContent = copiou ? "Chave copiada ✓" : "Chave selecionada — Ctrl+C";
     setTimeout(() => { $("btnPix").textContent = "Copiar chave Pix"; }, 2500);
   });
+
   let saved = null;
   try { saved = JSON.parse(localStorage.getItem(LSKEY) || "null"); } catch (_) {}
-  if (saved && saved.familia && FAMILIAS[saved.familia]) abrirConvite(saved.familia, saved.email, saved.digitado);
+
+  // Link individual do convite: ?convite=<nome> (abre direto, sem login). ?nome= define como saudar.
+  const convParam = q.get("convite");
+  const nomeParam = q.get("nome");
+  if (convParam) {
+    const r = acharFamilia(convParam);
+    if (r.status === "ok") {
+      abrirConvite(r.nome, "", nomeParam || convParam);
+      if (nomeParam) $("greetFam").textContent = nomeParam;
+      try { localStorage.setItem(LSKEY, JSON.stringify({ familia: r.nome, email: "", digitado: nomeParam || convParam })); } catch (_) {}
+    } else {
+      $("gnome").value = nomeParam || convParam;
+    }
+  } else if (saved && saved.familia && FAMILIAS[saved.familia]) {
+    abrirConvite(saved.familia, saved.email, saved.digitado);
+  }
+
+  if (location.hash === "#selftest") {
+    const e1 = { familia: "Arthur e Karen", tamanho: "G", email: "a@b.com", digitado: "arthur" };
+    console.assert(rsvpMessage(e1, 2, "").includes("Convite: Arthur e Karen"), "convite");
+    console.assert(rsvpMessage(e1, 2, "").includes("E-mail: a@b.com"), "email");
+    console.assert(rsvpMessage(e1, 2, "").includes("Nome informado: arthur"), "nome informado");
+    console.assert(rsvpMessage({ familia: "X", tamanho: "mimo" }, 2, "").toLowerCase().includes("mimo"), "mimo");
+    console.assert(acharFamilia("Arthur e Karen").nome === "Arthur e Karen", "exato");
+    console.assert(acharFamilia("arthur").nome === "Arthur e Karen", "primeiro nome");
+    console.assert(acharFamilia("JÚLIA").nome === "Júlia e Antony", "sem acento/caixa");
+    console.assert(acharFamilia("Camila").status === "ambiguo", "ambiguo");
+    console.assert(acharFamilia("Gisele Facchim e Família").nome === "Gisele Facchim e Família", "chave exata composta");
+    console.assert(acharFamilia("Tia Karen e Tio Arthur").nome === "Arthur e Karen", "com Tia/Tio");
+    console.assert(acharFamilia("Fulano de Tal").status === "nao_achou", "nao achou");
+    console.assert(acharFamilia("").status === "vazio", "vazio");
+    console.assert(EMAIL_RE.test("a@b.com") && !EMAIL_RE.test("a@b"), "email re");
+    console.assert(waUrl("oi").indexOf("wa.me/" + CONTATOS[0].zap) > 0, "wa contato padrão");
+    console.assert(waUrl("oi", "5518996165228").indexOf("wa.me/5518996165228") > 0, "wa contato escolhido");
+    console.assert(mapsUrl() === CONFIG.mapa, "maps usa o link salvo");
+    console.assert(diasRestantes(new Date("2026-10-16T13:00:00-03:00")) === 1, "amanha");
+    console.assert(contaPessoas("Wilson, Carol, Antonella e Neto") === 4, "conta4");
+    console.assert(limitaPessoas(9, 4) === 4, "não passa do teto");
+    console.assert(limitaPessoas(2, 4) === 2, "pode reduzir");
+    console.assert(limitaPessoas(NaN, 4) === 4 && limitaPessoas(0, 4) === 4, "vazio = teto");
+    console.assert(formUrl({}, true, 1, "") === null, "form desligado = WhatsApp");
+    CONFIG.form.base = "https://x/viewform?usp=pp_url";
+    CONFIG.form.campos = { familia: "entry.1", nome: "entry.2", email: "entry.3", confirmacao: "entry.4", pessoas: "entry.5", fralda: "entry.6", recado: "entry.7" };
+    const fu = formUrl({ familia: "Fam", digitado: "Fam", email: "a@b.com", tamanho: "G" }, true, 2, "");
+    console.assert(fu.includes("entry.4=Confirmado") && fu.includes("entry.5=2") && fu.includes("entry.6=G"), "formUrl preenche");
+    console.assert(formUrl({ familia: "F" }, false, 0, "").includes("entry.4=N"), "formUrl não vai");
+    CONFIG.form.base = "";
+    CONFIG.script = "https://s/exec";
+    const su = scriptUrl({ familia: "Fam", tamanho: "G", digitado: "x", email: "a@b.com" }, true, 3, "oi");
+    console.assert(su.includes("status=OK") && su.includes("pessoas=3") && su.includes("familia=Fam"), "scriptUrl");
+    console.assert(scriptUrl({ familia: "F", tamanho: "P" }, false, 0, "").includes("status=NAO"), "scriptUrl não");
+    CONFIG.script = "";
+    console.assert(Object.keys(FAMILIAS).every((n) => TAM[FAMILIAS[n].tamanho]), "tamanhos válidos");
+    console.log("selftest OK");
+  }
 </script>
 </body>
 </html>

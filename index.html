@@ -291,6 +291,7 @@
               <div class="tamBig" id="tamBig">—</div>
               <p class="tamCap" id="tamCap">—</p>
               <div class="scale" id="scale"></div>
+              <p class="tamCap" id="marca" style="margin-top:2px">Sugestão de marca: <strong>Pampers</strong></p>
             </div>
           </section>
 
@@ -551,6 +552,7 @@
       ? "Sua família vai de mimo — veja a sugestão de presente abaixo."
       : "Tamanho " + TAM[t] + " — reservado para a sua família.";
     renderScale(t);
+    $("marca").hidden = t === "mimo";
     syncLinks();
 
     $("gate").hidden = true;

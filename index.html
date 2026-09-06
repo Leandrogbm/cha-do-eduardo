@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#EAE0C7">
+<style>
+  html{color-scheme:light}
+  body{margin:0}
+  img{max-width:100%}
+  [hidden]{display:none!important}
+</style>
+<title>Chá do Eduardo</title>
+<meta name="description" content="Cada família entra, vê o tamanho de fralda reservado para ela, o local no mapa e confirma presença.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Caveat:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EAE0C7; --card:#FBF6EA; --card-edge:#E4D8BC;
+    --ink:#4A3B2A; --ink-soft:#8A7454;
+    --terra:#B5502F; --terra-pale:#C8846A;
+    --sage:#6E7B4E; --sage-deep:#4A5533; --sage-soft:#DDE2C6;
+    --focus:#2F6F6A;
+  }
+  *{box-sizing:border-box}
+  body{
+    min-height:100vh; margin:0; padding:22px 14px;
+    display:flex; align-items:center; justify-content:center;
+    background:radial-gradient(130% 80% at 50% -10%, #F7F0DE, var(--paper));
+    color:var(--ink); font-family:Nunito,system-ui,sans-serif;
+  }
+  :where(a,button,input,select,textarea):focus-visible{
+    outline:2px solid var(--focus); outline-offset:2px; border-radius:8px;
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+  #card{
+    position:relative; width:100%; max-width:452px; overflow:hidden;
+    padding:26px 20px 22px;
+    background:var(--card); border:1px solid var(--card-edge); border-radius:22px;
+    box-shadow:0 16px 44px -20px rgba(74,59,42,.4), 0 2px 8px -4px rgba(74,59,42,.15);
+    transition:max-width .2s ease;
+  }
+  .sprig{position:absolute; width:112px; height:112px; color:var(--sage); opacity:.36; z-index:0; pointer-events:none}
+  .sprig-tl{top:-16px; left:-18px; transform:rotate(-6deg)}
+  .sprig-br{bottom:-18px; right:-16px; transform:rotate(170deg)}
+  .panel{position:relative; z-index:1}
+  .wrap{display:flex; flex-direction:column; gap:22px}
+  .cols,.col-a,.col-b{display:contents}
+  .hero{display:flex; flex-direction:column; align-items:center; gap:4px; text-align:center}
+  .badge{
+    width:94px; height:94px; margin-bottom:4px; border-radius:50%;
+    background:radial-gradient(circle at 50% 38%, #F6E7C9, #EAD3A9);
+    border:2px dashed #CBB98C; display:flex; align-items:center; justify-content:center;
+    font-size:44px; position:relative;
+  }
+  .badge .crown{position:absolute; top:-12px; font-size:22px; transform:rotate(-12deg)}
+  .eyebrow{font:500 17px/1.2 Fraunces,Georgia,serif; color:var(--sage-deep); margin:0}
+  .name{font:700 62px/.85 Caveat,"Segoe Script",cursive; color:var(--terra); margin:2px 0}
+  .sub{font:400 14.5px/1.55 Nunito,sans-serif; color:var(--ink); max-width:30ch; margin:6px auto 0}
+  .rule{color:var(--terra-pale); font-size:15px; letter-spacing:.5em; margin:2px 0 4px}
+  .lede{font:400 15.5px/1.55 Nunito,sans-serif; color:var(--ink); max-width:33ch; margin:0 auto}
+  .greet{display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; margin:6px 0 0}
+  .greet .fam{
+    background:#F0E4CE; border:1px solid var(--card-edge); border-radius:999px; padding:5px 13px;
+    font:700 13.5px/1 Nunito,sans-serif; color:var(--sage-deep);
+  }
+  .greet a{color:var(--terra); font:600 12.5px/1 Nunito,sans-serif; text-decoration:none}
+  .greet a:hover{text-decoration:underline}
+  .cd{
+    align-self:center; margin-top:12px; padding:8px 15px; border-radius:999px;
+    background:#F0E4CE; border:1px solid var(--card-edge);
+    font:700 13px/1 Nunito,sans-serif; letter-spacing:.03em; color:var(--sage-deep);
+  }
+  .facts{display:grid; grid-template-columns:repeat(3,1fr)}
+  .fact{padding:2px 8px; text-align:center; display:flex; flex-direction:column; gap:3px}
+  .fact + .fact{border-left:1px solid var(--card-edge)}
+  .fact b{font:600 22px/1.05 Fraunces,Georgia,serif; color:var(--terra); overflow-wrap:anywhere}
+  .fact.v b{font-size:16px}
+  .fact small{font:400 11.5px/1.25 Nunito,sans-serif; color:var(--ink-soft)}
+  .stitle{
+    display:flex; align-items:center; justify-content:center; gap:10px; margin:0 0 12px;
+    font:600 14px/1 Nunito,sans-serif; letter-spacing:.09em; text-transform:uppercase; color:var(--sage-deep);
+  }
+  .stitle::before,.stitle::after{content:"\2665"; color:var(--terra-pale); font-size:12px}
+  .txt{font:400 14.5px/1.55 Nunito,sans-serif; color:var(--ink); text-align:center; margin:0 auto 12px; max-width:37ch}
+  .cap{font:400 12.5px/1.45 Nunito,sans-serif; color:var(--ink-soft); text-align:center; margin-top:8px}
+  .hint{font:400 11.5px/1.35 Nunito,sans-serif; color:var(--ink-soft)}
+  .seg{display:flex; border:1px solid var(--card-edge); border-radius:12px; overflow:hidden; background:var(--card)}
+  .seg-btn{flex:1; padding:10px 8px; border:0; background:transparent; cursor:pointer; font:600 14px/1 Nunito,sans-serif; color:var(--ink-soft)}
+  .seg-btn + .seg-btn{border-left:1px solid var(--card-edge)}
+  .seg-btn.is-on{background:var(--sage-deep); color:#FBF6EA}
+  .gate-form{display:flex; flex-direction:column; gap:14px; margin-top:18px}
+  .rsvp{
+    background:linear-gradient(#E7EACF,#EFEAD6); border:1px solid #CDD4B0; border-radius:18px;
+    padding:18px 16px; display:flex; flex-direction:column; gap:13px;
+  }
+  .field{display:flex; flex-direction:column; gap:6px}
+  .field label{font:600 12.5px/1.2 Nunito,sans-serif; color:var(--sage-deep); letter-spacing:.02em}
+  .field input,.field select,.field textarea{
+    width:100%; padding:11px 13px; border-radius:12px;
+    border:1px solid var(--card-edge); background:var(--card); color:var(--ink);
+    font:400 16px/1.4 Nunito,sans-serif;
+  }
+  .field textarea{resize:vertical; min-height:60px}
+  .two{display:grid; grid-template-columns:1fr 1fr; gap:11px}
+  .fixed{
+    padding:11px 13px; border-radius:12px; border:1px dashed #C3CBA6; background:#EFEAD6;
+    font:600 15px/1.4 Nunito,sans-serif; color:var(--sage-deep);
+  }
+  .err{min-height:1em; font:600 13px/1.3 Nunito,sans-serif; color:var(--terra); margin:0}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px; text-align:center;
+    padding:13px 18px; border-radius:999px; border:1.5px solid transparent; cursor:pointer;
+    font:700 15px/1 Nunito,sans-serif; text-decoration:none;
+    transition:transform .12s ease, background .12s ease;
+  }
+  .btn:active{transform:translateY(1px)}
+  .btn-full{width:100%}
+  .btn-primary{background:var(--sage-deep); color:#FBF6EA}
+  .btn-primary:hover{background:#3E4A2C}
+  .btn-outline{background:transparent; color:var(--sage-deep); border-color:#C3CBA6}
+  .btn-outline:hover{background:#EDEFDD}
+  .btn-ghost{background:transparent; color:var(--terra); padding:8px 12px; font-weight:600}
+  .btn-ghost:hover{text-decoration:underline}
+  .tamBox{
+    background:linear-gradient(#E7EACF,#EFEAD6); border:1px solid #CDD4B0; border-radius:18px;
+    padding:18px 16px; display:flex; flex-direction:column; align-items:center; gap:9px; text-align:center;
+  }
+  .tamBig{
+    width:64px; height:64px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    background:var(--card); border:2px solid var(--terra);
+    font:700 25px/1 Fraunces,Georgia,serif; color:var(--terra);
+  }
+  .tamCap{font:400 13px/1.45 Nunito,sans-serif; color:var(--ink); max-width:30ch}
+  .scale{display:flex; gap:6px; flex-wrap:wrap; justify-content:center}
+  .scl{
+    border:1px solid var(--card-edge); border-radius:10px; padding:6px 10px; background:var(--card);
+    font:700 13px/1 Fraunces,Georgia,serif; color:var(--ink-soft);
+  }
+  .scl.on{border-color:var(--terra); background:#F6E3D9; color:var(--terra)}
+  .pix{margin-top:14px; padding-top:14px; border-top:1px dashed var(--card-edge); display:flex; flex-direction:column; gap:10px}
+  .pixkey{
+    font:600 13px/1.4 ui-monospace,"Cascadia Code",Consolas,monospace; color:var(--sage-deep);
+    background:#EFEAD6; border:1px dashed #C3CBA6; border-radius:10px;
+    padding:10px 12px; text-align:center; word-break:break-all; user-select:all;
+  }
+  .foot{text-align:center; font:600 22px/1.3 Caveat,"Segoe Script",cursive; color:var(--sage-deep); margin:0}
+  .foot .h{color:var(--terra)}
+  @media (min-width:820px){
+    #card.wide{max-width:900px; padding:36px 46px 32px}
+    #card.wide .cols{display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr); gap:34px; align-items:start}
+    #card.wide .col-a{display:block}
+    #card.wide .col-b{display:flex; flex-direction:column; gap:22px}
+    #card.wide .lede{max-width:48ch}
+    #card.wide .fact b{font-size:24px}
+    #card.wide .fact.v b{font-size:19px}
+    #card.wide .sprig{width:140px; height:140px}
+  }
+</style>
+</head>
+<body>
+<div id="card">
+  <svg class="sprig sprig-tl" viewBox="0 0 120 120" aria-hidden="true">
+    <path d="M12 112 C 42 92, 62 60, 82 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+    <g fill="currentColor">
+      <ellipse cx="31" cy="88" rx="12" ry="6" transform="rotate(-30 31 88)"/>
+      <ellipse cx="47" cy="67" rx="13" ry="6.5" transform="rotate(-20 47 67)"/>
+      <ellipse cx="61" cy="46" rx="13" ry="6.5" transform="rotate(-8 61 46)"/>
+      <ellipse cx="72" cy="25" rx="11" ry="6" transform="rotate(6 72 25)"/>
+      <ellipse cx="19" cy="99" rx="10" ry="5" transform="rotate(-48 19 99)"/>
+      <ellipse cx="41" cy="79" rx="11" ry="5.5" transform="rotate(-58 41 79)"/>
+    </g>
+  </svg>
+  <svg class="sprig sprig-br" viewBox="0 0 120 120" aria-hidden="true">
+    <path d="M12 112 C 42 92, 62 60, 82 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+    <g fill="currentColor">
+      <ellipse cx="31" cy="88" rx="12" ry="6" transform="rotate(-30 31 88)"/>
+      <ellipse cx="47" cy="67" rx="13" ry="6.5" transform="rotate(-20 47 67)"/>
+      <ellipse cx="61" cy="46" rx="13" ry="6.5" transform="rotate(-8 61 46)"/>
+      <ellipse cx="72" cy="25" rx="11" ry="6" transform="rotate(6 72 25)"/>
+      <ellipse cx="19" cy="99" rx="10" ry="5" transform="rotate(-48 19 99)"/>
+      <ellipse cx="41" cy="79" rx="11" ry="5.5" transform="rotate(-58 41 79)"/>
+    </g>
+  </svg>
+  <section id="gate" class="panel">
+    <div class="hero">
+      <div class="badge"><span class="crown" aria-hidden="true">👑</span><span aria-hidden="true">🦁</span></div>
+      <p class="eyebrow">Chá de fraldas do</p>
+      <h1 class="name">Eduardo</h1>
+      <p class="sub">Entre com seu nome e e-mail para ver os detalhes do chá e confirmar. Ninguém vê a lista de convidados.</p>
+    </div>
+    <form class="gate-form" id="gateForm" novalidate>
+      <div class="field">
+        <label for="gnome">Seu nome, como aparece no convite</label>
+        <input id="gnome" type="text" autocomplete="name" placeholder="Digite seu nome">
+      </div>
+      <div class="field">
+        <label for="gemail">Seu e-mail</label>
+        <input id="gemail" type="email" inputmode="email" autocomplete="email" placeholder="voce@email.com">
+      </div>
+      <p class="err" id="gateErr" aria-live="polite"></p>
+      <button type="submit" class="btn btn-primary btn-full">Entrar</button>
+      <p class="cap">Não encontrou pelo primeiro nome? Digite o nome completo, igual ao do convite.</p>
+    </form>
+  </section>
+  <section id="invite" class="panel" hidden>
+    <div class="wrap">
+      <div class="hero">
+        <div class="badge"><span class="crown" aria-hidden="true">👑</span><span aria-hidden="true">🦁</span></div>
+        <p class="eyebrow">Chá de fraldas do</p>
+        <h1 class="name">Eduardo</h1>
+        <p class="greet"><span class="fam" id="greetFam">Família</span><a href="#" id="trocar">trocar família</a></p>
+        <div class="rule" aria-hidden="true">♥</div>
+        <p class="lede">Nosso pequeno está chegando e queremos você ao nosso lado nesse dia especial. Contamos com a sua presença!</p>
+        <div class="cd" id="cd">Faltam poucos dias 🦁</div>
+      </div>
+      <div class="facts">
+        <div class="fact"><b>17</b><small>Outubro · sábado</small></div>
+        <div class="fact v"><b>Chácara Fest</b><small>Fantasia</small></div>
+        <div class="fact"><b>13h</b><small>horário</small></div>
+      </div>
+      <div class="cols">
+        <div class="col-a">
+          <section>
+            <h2 class="stitle">Confirme sua presença</h2>
+            <form class="rsvp" id="form" novalidate>
+              <div class="field">
+                <label for="nome">Quem responde</label>
+                <input id="nome" type="text" autocomplete="name">
+              </div>
+              <div class="two">
+                <div class="field">
+                  <label for="pessoas">Pessoas que vão</label>
+                  <input id="pessoas" type="number" inputmode="numeric" min="1" max="1" value="1">
+                  <span class="hint" id="pessoasHint">só dá para reduzir</span>
+                </div>
+                <div class="field">
+                  <label for="tamFix">Fralda combinada</label>
+                  <div class="fixed" id="tamFix">—</div>
+                </div>
+              </div>
+              <div class="field">
+                <label for="recado">Recadinho (opcional)</label>
+                <textarea id="recado" placeholder="Deixe um carinho para o Eduardo"></textarea>
+              </div>
+              <div class="field" id="contatoWrap">
+                <label>Enviar confirmação para</label>
+                <div class="seg" id="seg" role="group" aria-label="Enviar confirmação para">
+                  <button type="button" class="seg-btn is-on" data-i="0">Leandro</button>
+                  <button type="button" class="seg-btn" data-i="1">Nathalia</button>
+                </div>
+              </div>
+              <a class="btn btn-primary btn-full" id="btnConfirm" target="_blank" rel="noopener">Confirmar presença</a>
+              <a class="btn btn-ghost" id="btnDecline" target="_blank" rel="noopener" style="align-self:center">Não vou poder ir 💛</a>
+              <p class="cap" id="rsvpCap">Ao confirmar, abrimos uma mensagem pronta para você enviar a quem está organizando.</p>
+            </form>
+          </section>
+        </div>
+        <div class="col-b">
+          <section>
+            <h2 class="stitle">A fralda da sua família</h2>
+            <div class="tamBox">
+              <div class="tamBig" id="tamBig">—</div>
+              <p class="tamCap" id="tamCap">—</p>
+              <div class="scale" id="scale"></div>
+            </div>
+          </section>
+          <section>
+            <h2 class="stitle">Presentear o Eduardo</h2>
+            <p class="txt">A lista está na <strong>Fralda e Cia</strong>. A partir de <strong>30 de setembro</strong> também haverá uma lista presencial na loja.</p>
+            <a class="btn btn-primary btn-full" href="https://www.fraldaecia.com.br/loja/print_lista.php?loja=979915&amp;id_lista=229" target="_blank" rel="noopener">🛒 Ver a lista de presentes</a>
+            <div class="pix">
+              <p class="txt">Se for mais cômodo presentear de outra forma, esta é a chave Pix (aleatória):</p>
+              <code class="pixkey" id="pixkey">94bb2f33-80dd-4f28-9f96-0b7679141fff</code>
+              <button type="button" class="btn btn-outline btn-full" id="btnPix">Copiar chave Pix</button>
+            </div>
+          </section>
+          <section>
+            <h2 class="stitle">Como chegar</h2>
+            <p class="txt"><strong>Chácara Fest</strong> · Espaço <strong>Fantasia</strong> (a chácara tem dois espaços — o nosso é o Fantasia). Toque abaixo para abrir no mapa.</p>
+            <a class="btn btn-outline btn-full" id="btnMap" target="_blank" rel="noopener">📍 Ver no Google Maps</a>
+          </section>
+        </div>
+      </div>
+      <p class="foot">Com muito carinho,<br>nosso pequeno já conta com você! <span class="h">♥</span></p>
+    </div>
+  </section>
+</div>
+<script>
+  document.documentElement.lang = "pt-BR";
+  const $ = (id) => document.getElementById(id);
+  const LSKEY = "cha-eduardo:familia";
+  const q = new URLSearchParams(location.search);
+  const CONTATOS = [
+    { nome: "Leandro", zap: "5518996069879" },
+    { nome: "Nathalia", zap: "5518996165228" },
+  ];
+  let contatoIdx = 0;
+  const CONFIG = {
+    local: "Chácara Fest — Espaço Fantasia",
+    mapa: "https://maps.app.goo.gl/EFTYpVYvFCFrNEpv6",
+    quando: "2026-10-17T13:00:00-03:00",
+    script: q.get("api") || "",
+    form: { base: "", campos: { familia: "", nome: "", email: "", confirmacao: "", pessoas: "", fralda: "", recado: "" } },
+  };
+  const FAMILIAS = {
+    "Arthur e Karen": { tamanho: "G" }, "Michele": { tamanho: "G" }, "Oswaldo e Marcela": { tamanho: "P" },
+    "Vitor e Camila": { tamanho: "P" }, "Dinho e Fernanda": { tamanho: "XG" }, "Aristide e Dani": { tamanho: "P" },
+    "Felipe": { tamanho: "P" }, "Vô Angelo e Vó Rose": { tamanho: "P" }, "Wilson, Carol, Antonella e Neto": { tamanho: "P" },
+    "Bisa Lina": { tamanho: "RN" }, "Biso Dino e Bisa Lidia": { tamanho: "RN" }, "Vô Eraldo e Vó Luiza": { tamanho: "M" },
+    "Beatriz e Bruno": { tamanho: "M" }, "Fabiano e Renata": { tamanho: "M" }, "Guilherme e Juliana": { tamanho: "M" },
+    "Neja, Ana e Amanda": { tamanho: "M" }, "João e Mari": { tamanho: "M" }, "Fabio e Amanda": { tamanho: "XG" },
+    "Daniel": { tamanho: "M" }, "Everton": { tamanho: "M" }, "Ricardo e Nicole": { tamanho: "M" },
+    "Marco, Luciana e Vó": { tamanho: "M" }, "Rafa e Juninho": { tamanho: "M" }, "Gabriel e Camila": { tamanho: "G" },
+    "Raiany e Manu": { tamanho: "G" }, "João e Raileny": { tamanho: "G" }, "Mario e Ranali": { tamanho: "G" },
+    "Juan": { tamanho: "P" }, "Júlia e Antony": { tamanho: "P" }, "Luis e Anna": { tamanho: "G" },
+    "Rafael e Thyago": { tamanho: "G" }, "Camila e Raphael": { tamanho: "G" }, "Bruna Coleti": { tamanho: "G" },
+    "Jaque e Família": { tamanho: "G" }, "Gisele Facchim e Família": { tamanho: "G" }, "Neto e Ana Maria": { tamanho: "G" },
+    "Amanda Pimenta e Família": { tamanho: "G" }, "Tia Gisele": { tamanho: "G" }, "Lívia Santi": { tamanho: "P" },
+    "Vitor e Bruna": { tamanho: "XG" }, "Fabio e Adriele": { tamanho: "M" }, "Tim e Ana": { tamanho: "XG" },
+    "Aline e Gil": { tamanho: "M" }, "Anathiele e Familia": { tamanho: "G" },
+  };
+  const TAM = { RN: "recém-nascido", P: "pequeno", M: "médio", G: "grande", XG: "extra grande", mimo: "vai de mimo" };
+  const ORDEM = ["RN", "P", "M", "G", "XG"];
+  let estado = { familia: "", tamanho: "M", pessoas: 1, email: "", digitado: "" };
+  const CONECTORES = new Set(["e", "de", "da", "do", "dos", "das", "a", "o", "&"]);
+  const norm = (s) => (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/\s+/g, " ").trim();
+  const tokens = (s) => norm(s).split(/[^a-z0-9]+/).filter((t) => t && !CONECTORES.has(t));
+  function acharFamilia(input) {
+    const it = tokens(input);
+    if (!it.length) return { status: "vazio" };
+    const chaves = Object.keys(FAMILIAS);
+    const exato = chaves.find((k) => norm(k) === norm(input));
+    if (exato) return { status: "ok", nome: exato };
+    const itSet = new Set(it);
+    const matches = chaves.filter((k) => {
+      const kt = tokens(k);
+      return it.every((t) => kt.includes(t)) || kt.every((t) => itSet.has(t));
+    });
+    if (matches.length === 1) return { status: "ok", nome: matches[0] };
+    if (matches.length === 0) return { status: "nao_achou" };
+    return { status: "ambiguo" };
+  }
+  function rsvpMessage(e, pessoas, recado) {
+    const linhas = ["Oi! Confirmo presença no chá de fraldas do Eduardo 🦁"];
+    linhas.push("Convite: " + e.familia);
+    if (e.digitado && norm(e.digitado) !== norm(e.familia)) linhas.push("Nome informado: " + e.digitado);
+    if (e.email) linhas.push("E-mail: " + e.email);
+    linhas.push("Vamos em " + pessoas + " pessoa(s)");
+    linhas.push(e.tamanho === "mimo" ? "Vamos de mimo 💛" : "Fralda combinada: " + e.tamanho + " (" + (TAM[e.tamanho] || "") + ")");
+    if (recado) linhas.push("Recadinho: " + recado);
+    return linhas.join("\n");
+  }
+  function declineMessage(e) {
+    return "Oi! " + e.familia + " infelizmente não vai conseguir ir ao chá de fraldas do Eduardo, mas manda um carinho de longe 💛" + (e.email ? "\nE-mail: " + e.email : "");
+  }
+  function waUrl(text, zap) { return "https://wa.me/" + (zap || CONTATOS[contatoIdx].zap) + "?text=" + encodeURIComponent(text); }
+  function formUrl(e, vai, pessoas, recado) {
+    const f = CONFIG.form;
+    if (!f || !f.base) return null;
+    const p = new URLSearchParams();
+    const put = (id, val) => { if (id && val !== "" && val != null) p.set(id, val); };
+    put(f.campos.familia, e.familia); put(f.campos.nome, e.digitado); put(f.campos.email, e.email);
+    put(f.campos.confirmacao, vai ? "Confirmado" : "Não vai"); put(f.campos.pessoas, vai ? pessoas : 0);
+    put(f.campos.fralda, e.tamanho === "mimo" ? "Mimo" : e.tamanho); put(f.campos.recado, recado);
+    return f.base + (f.base.indexOf("?") >= 0 ? "&" : "?") + p.toString();
+  }
+  const usaForm = () => !!(CONFIG.form && CONFIG.form.base);
+  function scriptUrl(e, vai, pessoas, recado) {
+    if (!CONFIG.script) return null;
+    const p = new URLSearchParams({
+      familia: e.familia, nome: e.digitado || "", email: e.email || "",
+      status: vai ? "OK" : "NAO", pessoas: String(vai ? pessoas : 0), fralda: e.tamanho, recado: recado || "",
+    });
+    return CONFIG.script + (CONFIG.script.indexOf("?") >= 0 ? "&" : "?") + p.toString();
+  }
+  const online = () => !!CONFIG.script || usaForm();
+  function mapsUrl() { return CONFIG.mapa || "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(CONFIG.local); }
+  function contaPessoas(nome) { return Math.min(30, nome.split(/\s+e\s+|,\s*/).filter(Boolean).length) || 1; }
+  function diasRestantes(now) { return Math.ceil((new Date(CONFIG.quando) - (now || new Date())) / 86400000); }
+  function textoContagem(d) {
+    if (d > 1) return "Faltam " + d + " dias 🦁";
+    if (d === 1) return "É amanhã! 🦁";
+    if (d === 0) return "É hoje! 🎉";
+    return "Obrigado por celebrar com a gente 💛";
+  }
+  const limitaPessoas = (raw, teto) => Math.min(teto, Math.max(1, raw || teto));
+  function syncLinks() {
+    const raw = parseInt($("pessoas").value, 10);
+    if (raw > estado.pessoas) $("pessoas").value = estado.pessoas;
+    const p = limitaPessoas(raw, estado.pessoas);
+    estado.digitado = $("nome").value.trim() || estado.familia;
+    const recado = $("recado").value.trim();
+    $("btnConfirm").href = scriptUrl(estado, true, p, recado) || formUrl(estado, true, p, recado) || waUrl(rsvpMessage(estado, p, recado));
+    $("btnDecline").href = scriptUrl(estado, false, 0, "") || formUrl(estado, false, 0, "") || waUrl(declineMessage(estado));
+  }
+  function renderScale(t) {
+    const box = $("scale"); box.innerHTML = "";
+    if (t === "mimo") { box.hidden = true; return; }
+    box.hidden = false;
+    ORDEM.forEach((s) => {
+      const el = document.createElement("span");
+      el.className = "scl" + (s === t ? " on" : ""); el.textContent = s; box.appendChild(el);
+    });
+  }
+  function abrirConvite(name, email, digitado) {
+    const info = FAMILIAS[name];
+    if (!info) return;
+    const t = TAM[info.tamanho] ? info.tamanho : "M";
+    estado = { familia: name, tamanho: t, pessoas: Math.min(30, Math.max(1, info.pessoas || contaPessoas(name))), email: email || "", digitado: digitado || name };
+    $("greetFam").textContent = name;
+    $("nome").value = digitado && norm(digitado) !== norm(name) ? digitado : "";
+    $("nome").placeholder = name;
+    $("pessoas").value = estado.pessoas;
+    $("pessoas").max = estado.pessoas;
+    $("pessoasHint").textContent = estado.pessoas > 1 ? "combinado: " + estado.pessoas + " — reduza se alguém não puder ir" : "convite para 1 pessoa";
+    $("tamFix").textContent = t === "mimo" ? "Vão de mimo 💛" : t + " — " + TAM[t];
+    $("tamBig").textContent = t === "mimo" ? "💛" : t;
+    $("tamCap").textContent = t === "mimo" ? "Sua família vai de mimo — veja a sugestão de presente abaixo." : "Tamanho " + TAM[t] + " — reservado para a sua família.";
+    renderScale(t); syncLinks();
+    $("gate").hidden = true; $("invite").hidden = false; $("card").classList.add("wide");
+  }
+  function voltarGate() {
+    try { localStorage.removeItem(LSKEY); } catch (_) {}
+    $("invite").hidden = true; $("gate").hidden = false; $("card").classList.remove("wide");
+    $("gnome").value = ""; $("gemail").value = ""; $("gateErr").textContent = "";
+  }
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  $("gateForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const digitado = $("gnome").value.trim();
+    const email = $("gemail").value.trim();
+    if (!digitado) { $("gateErr").textContent = "Digite seu nome."; return; }
+    if (!EMAIL_RE.test(email)) { $("gateErr").textContent = "Digite um e-mail válido."; return; }
+    const r = acharFamilia(digitado);
+    if (r.status === "ambiguo") { $("gateErr").textContent = "Há mais de um convite com esse nome. Digite o nome completo, como está no convite."; return; }
+    if (r.status !== "ok") { $("gateErr").textContent = "Não encontramos esse nome na lista de convidados. Confira como está escrito no seu convite."; return; }
+    $("gateErr").textContent = "";
+    abrirConvite(r.nome, email, digitado);
+    try { localStorage.setItem(LSKEY, JSON.stringify({ familia: r.nome, email: email, digitado: digitado })); } catch (_) {}
+  });
+  $("trocar").addEventListener("click", (e) => { e.preventDefault(); voltarGate(); });
+  $("form").addEventListener("input", syncLinks);
+  document.querySelectorAll("#seg .seg-btn").forEach((b) => {
+    b.addEventListener("click", () => {
+      contatoIdx = Number(b.dataset.i) || 0;
+      document.querySelectorAll("#seg .seg-btn").forEach((x) => x.classList.toggle("is-on", x === b));
+      syncLinks();
+    });
+  });
+  if (online()) {
+    $("btnConfirm").textContent = "Confirmar presença";
+    $("contatoWrap").hidden = true;
+    $("rsvpCap").textContent = CONFIG.script ? "Ao confirmar, sua resposta vai direto para a organização. Pode fechar a aba que abrir." : "Ao confirmar, abrimos o formulário já preenchido para você revisar e enviar.";
+  } else {
+    $("btnConfirm").textContent = "Confirmar no WhatsApp";
+    $("rsvpCap").textContent = "Ao confirmar, abrimos uma mensagem pronta no WhatsApp de quem você escolher acima.";
+  }
+  $("btnMap").href = mapsUrl();
+  $("cd").textContent = textoContagem(diasRestantes());
+  $("btnPix").addEventListener("click", async () => {
+    const chave = $("pixkey").textContent.trim();
+    let copiou = false;
+    try { await navigator.clipboard.writeText(chave); copiou = true; } catch (_) {}
+    if (!copiou) { const r = document.createRange(); r.selectNodeContents($("pixkey")); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); }
+    $("btnPix").textContent = copiou ? "Chave copiada ✓" : "Chave selecionada — Ctrl+C";
+    setTimeout(() => { $("btnPix").textContent = "Copiar chave Pix"; }, 2500);
+  });
+  let saved = null;
+  try { saved = JSON.parse(localStorage.getItem(LSKEY) || "null"); } catch (_) {}
+  if (saved && saved.familia && FAMILIAS[saved.familia]) abrirConvite(saved.familia, saved.email, saved.digitado);
+</script>
+</body>
+</html>

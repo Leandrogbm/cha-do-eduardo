@@ -364,7 +364,7 @@
     "Aristide e Dani": { tamanho: "P" },
     "Felipe": { tamanho: "P" },
     "Vô Angelo e Vó Rose": { tamanho: "P" },
-    "Wilson, Carol, Antonella e Neto": { tamanho: "P", pessoas: 4, aberta: true },
+    "Wilson, Carol, Antonella e Neto": { tamanho: "P", pessoas: 4 },
     "Bisa Lina": { tamanho: "RN" },
     "Biso Dino e Bisa Lidia": { tamanho: "RN" },
     "Vô Eraldo e Vó Luiza": { tamanho: "M" },
@@ -389,17 +389,17 @@
     "Rafael e Thyago": { tamanho: "G" },
     "Camila e Raphael": { tamanho: "G", apelidos: ["Camila Daher"] },
     "Bruna Coleti": { tamanho: "G" },
-    "Jaque e Família": { tamanho: "G", pessoas: 4, aberta: true },
-    "Gisele Facchim e Família": { tamanho: "G", pessoas: 3, aberta: true },
+    "Jaque e Família": { tamanho: "G", pessoas: 4 },
+    "Gisele Facchim e Família": { tamanho: "G", pessoas: 3 },
     "Neto e Ana Maria": { tamanho: "G" },
-    "Amanda Pimenta e Família": { tamanho: "G", pessoas: 4, aberta: true },
+    "Amanda Pimenta e Família": { tamanho: "G", pessoas: 4 },
     "Tia Gisele": { tamanho: "G" },
     "Lívia Santi": { tamanho: "P" },
     "Vitor e Bruna": { tamanho: "XG" },
     "Fabio e Adriele": { tamanho: "M" },
     "Tim e Ana": { tamanho: "XG" },
     "Aline e Gil": { tamanho: "M" },
-    "Anathiele e Familia": { tamanho: "G", pessoas: 4, aberta: true },
+    "Anathiele e Familia": { tamanho: "G", pessoas: 4 },
   };
 
   const TAM = { RN: "recém-nascido", P: "pequeno", M: "médio", G: "grande", XG: "extra grande", mimo: "vai de mimo" };
@@ -513,12 +513,12 @@
   }
 
   // ponytail: o nº combinado é o teto — a família só reduz (alguém não vai), nunca aumenta
-  const limitaPessoas = (raw, teto, padrao) => Math.min(teto, Math.max(1, raw || padrao || teto));
+  const limitaPessoas = (raw, teto) => Math.min(teto, Math.max(1, raw || teto));
 
   function syncLinks() {
     const raw = parseInt($("pessoas").value, 10);
-    if (raw > estado.teto) $("pessoas").value = estado.teto;
-    const p = limitaPessoas(raw, estado.teto, estado.pessoas);
+    if (raw > estado.pessoas) $("pessoas").value = estado.pessoas;
+    const p = limitaPessoas(raw, estado.pessoas);
     estado.digitado = $("nome").value.trim() || estado.familia;
     const recado = $("recado").value.trim();
     $("btnConfirm").href = scriptUrl(estado, true, p, recado) || formUrl(estado, true, p, recado) || waUrl(rsvpMessage(estado, p, recado));
@@ -544,20 +544,18 @@
     const t = TAM[info.tamanho] ? info.tamanho : "M";
     const inicial = Math.min(30, Math.max(1, info.pessoas || contaPessoas(name)));
     estado = {
-      familia: name, tamanho: t,
-      pessoas: inicial,
-      teto: info.aberta ? 20 : inicial, // aberta = pode aumentar; senão só reduz
+      familia: name, tamanho: t, pessoas: inicial,
       email: email || "", digitado: digitado || name,
     };
 
     $("greetFam").textContent = name;
     $("nome").value = digitado && norm(digitado) !== norm(name) ? digitado : "";
     $("nome").placeholder = name;
-    $("pessoas").value = estado.pessoas;
-    $("pessoas").max = estado.teto;
-    $("pessoasHint").textContent = info.aberta
-      ? "ajuste para quantas pessoas forem"
-      : (inicial > 1 ? "combinado: " + inicial + " — reduza se alguém não puder ir" : "convite para 1 pessoa");
+    $("pessoas").value = inicial;
+    $("pessoas").max = inicial;
+    $("pessoasHint").textContent = inicial > 1
+      ? "combinado: " + inicial + " — reduza se alguém não puder ir"
+      : "convite para 1 pessoa";
     $("tamFix").textContent = t === "mimo" ? "Vão de mimo 💛" : t + " — " + TAM[t];
     $("tamBig").textContent = t === "mimo" ? "💛" : t;
     $("tamCap").textContent = t === "mimo"
@@ -688,15 +686,10 @@
     console.assert(mapsUrl() === CONFIG.mapa, "maps usa o link salvo");
     console.assert(diasRestantes(new Date("2026-10-16T13:00:00-03:00")) === 1, "amanha");
     console.assert(contaPessoas("Wilson, Carol, Antonella e Neto") === 4, "conta4");
-    console.assert(limitaPessoas(9, 4) === 4, "fechada: não passa do teto");
-    console.assert(limitaPessoas(2, 4) === 2, "fechada: pode reduzir");
-    console.assert(limitaPessoas(NaN, 4) === 4 && limitaPessoas(0, 4) === 4, "fechada: vazio = teto");
-    console.assert(limitaPessoas(8, 20, 4) === 8, "aberta: pode aumentar");
-    console.assert(limitaPessoas(25, 20, 4) === 20, "aberta: cap em 20");
-    console.assert(limitaPessoas(NaN, 20, 4) === 4, "aberta: vazio = inicial");
-    console.assert(FAMILIAS["Jaque e Família"].aberta && FAMILIAS["Jaque e Família"].pessoas === 4, "Jaque aberta");
-    console.assert(FAMILIAS["Gisele Facchim e Família"].pessoas === 3, "Gisele Facchim = 3");
-    console.assert(!FAMILIAS["Arthur e Karen"].aberta, "casal comum não é aberta");
+    console.assert(limitaPessoas(9, 4) === 4, "não passa do teto");
+    console.assert(limitaPessoas(2, 4) === 2, "pode reduzir");
+    console.assert(limitaPessoas(NaN, 4) === 4 && limitaPessoas(0, 4) === 4, "vazio = teto");
+    console.assert(FAMILIAS["Jaque e Família"].pessoas === 4 && FAMILIAS["Gisele Facchim e Família"].pessoas === 3, "totais das famílias");
     console.assert(formUrl({}, true, 1, "") === null, "form desligado = WhatsApp");
     CONFIG.form.base = "https://x/viewform?usp=pp_url";
     CONFIG.form.campos = { familia: "entry.1", nome: "entry.2", email: "entry.3", confirmacao: "entry.4", pessoas: "entry.5", fralda: "entry.6", recado: "entry.7" };

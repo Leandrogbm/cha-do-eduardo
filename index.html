@@ -359,7 +359,7 @@
     "Arthur e Karen": { tamanho: "G" },
     "Michele": { tamanho: "G" },
     "Oswaldo e Marcela": { tamanho: "P" },
-    "Vitor e Camila": { tamanho: "P" },
+    "Vitor e Camila": { tamanho: "P", apelidos: ["Camila Cavariani"] },
     "Dinho e Fernanda": { tamanho: "XG" },
     "Aristide e Dani": { tamanho: "P" },
     "Felipe": { tamanho: "P" },
@@ -379,7 +379,7 @@
     "Ricardo e Nicole": { tamanho: "M" },
     "Marco, Luciana e Vó": { tamanho: "M" },
     "Rafa e Juninho": { tamanho: "M" },
-    "Gabriel e Camila": { tamanho: "G" },
+    "Gabriel e Camila": { tamanho: "G", apelidos: ["Camila Gibim"] },
     "Raiany e Manu": { tamanho: "G" },
     "João e Raileny": { tamanho: "G" },
     "Mario e Ranali": { tamanho: "G" },
@@ -387,7 +387,7 @@
     "Júlia e Antony": { tamanho: "P" },
     "Luis e Anna": { tamanho: "G" },
     "Rafael e Thyago": { tamanho: "G" },
-    "Camila e Raphael": { tamanho: "G" },
+    "Camila e Raphael": { tamanho: "G", apelidos: ["Camila Daher"] },
     "Bruna Coleti": { tamanho: "G" },
     "Jaque e Família": { tamanho: "G" },
     "Gisele Facchim e Família": { tamanho: "G" },
@@ -407,7 +407,8 @@
 
   let estado = { familia: "", tamanho: "M", pessoas: 1, email: "", digitado: "" };
 
-  const CONECTORES = new Set(["e", "de", "da", "do", "dos", "das", "a", "o", "&"]);
+  // conectores + tratamentos/apelidos que não identificam ninguém (ignorados na busca do nome)
+  const CONECTORES = new Set(["e", "de", "da", "do", "dos", "das", "a", "o", "&", "tia", "tio", "vo", "vovo", "avo", "bisa", "biso", "bisavo"]);
   const norm = (s) => (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/\s+/g, " ").trim();
   const tokens = (s) => norm(s).split(/[^a-z0-9]+/).filter((t) => t && !CONECTORES.has(t));
 
@@ -417,16 +418,26 @@
     const it = tokens(input);
     if (!it.length) return { status: "vazio" };
     const chaves = Object.keys(FAMILIAS);
+
     const exato = chaves.find((k) => norm(k) === norm(input));
     if (exato) return { status: "ok", nome: exato };
-    const itSet = new Set(it);
-    const matches = chaves.filter((k) => {
-      const kt = tokens(k);
-      return it.every((t) => kt.includes(t)) || kt.every((t) => itSet.has(t));
-    });
-    if (matches.length === 1) return { status: "ok", nome: matches[0] };
-    if (matches.length === 0) return { status: "nao_achou" };
-    return { status: "ambiguo" };
+
+    // nomes buscáveis = tokens do nome do convite + tokens dos apelidos (nome + sobrenome)
+    const buscaveis = (k) => {
+      const s = new Set(tokens(k));
+      (FAMILIAS[k].apelidos || []).forEach((a) => tokens(a).forEach((t) => s.add(t)));
+      return s;
+    };
+    // vence a família com mais nomes em comum com o que foi digitado
+    const scored = chaves
+      .map((k) => ({ k, inter: it.filter((t) => buscaveis(k).has(t)).length }))
+      .filter((c) => c.inter > 0);
+    if (!scored.length) return { status: "nao_achou" };
+
+    const max = Math.max(...scored.map((c) => c.inter));
+    const top = scored.filter((c) => c.inter === max);
+    if (top.length === 1) return { status: "ok", nome: top[0].k };
+    return { status: "ambiguo", dicas: top.flatMap((c) => FAMILIAS[c.k].apelidos || []) };
   }
 
   function rsvpMessage(e, pessoas, recado) {
@@ -579,7 +590,9 @@
     if (!EMAIL_RE.test(email)) { $("gateErr").textContent = "Digite um e-mail válido."; return; }
     const r = acharFamilia(digitado);
     if (r.status === "ambiguo") {
-      $("gateErr").textContent = "Há mais de um convite com esse nome. Digite o nome completo, como está no convite.";
+      $("gateErr").textContent = r.dicas && r.dicas.length
+        ? "Tem mais de uma pessoa com esse nome. Digite com o sobrenome (ex.: " + r.dicas.join(", ") + ")."
+        : "Tem mais de um convite com esse nome. Digite o nome completo, como está no convite.";
       return;
     }
     if (r.status !== "ok") {
@@ -657,8 +670,18 @@
     console.assert(acharFamilia("arthur").nome === "Arthur e Karen", "primeiro nome");
     console.assert(acharFamilia("JÚLIA").nome === "Júlia e Antony", "sem acento/caixa");
     console.assert(acharFamilia("Camila").status === "ambiguo", "ambiguo");
+    console.assert(acharFamilia("Camila").dicas.join() === "Camila Cavariani,Camila Gibim,Camila Daher", "dicas de sobrenome");
+    console.assert(acharFamilia("Camila Cavariani").nome === "Vitor e Camila", "sobrenome Cavariani");
+    console.assert(acharFamilia("Camila Gibim").nome === "Gabriel e Camila", "sobrenome Gibim");
+    console.assert(acharFamilia("camila daher").nome === "Camila e Raphael", "sobrenome Daher");
     console.assert(acharFamilia("Gisele Facchim e Família").nome === "Gisele Facchim e Família", "chave exata composta");
     console.assert(acharFamilia("Tia Karen e Tio Arthur").nome === "Arthur e Karen", "com Tia/Tio");
+    console.assert(acharFamilia("Tia Luciana e Tio Marco").nome === "Marco, Luciana e Vó", "3a pessoa na chave");
+    console.assert(acharFamilia("Tia Gisele Facchim e Família").nome === "Gisele Facchim e Família", "vs Tia Gisele");
+    console.assert(acharFamilia("Tia Gisele").nome === "Tia Gisele", "Tia Gisele sozinha");
+    console.assert(acharFamilia("Tia Michele").nome === "Michele", "Tia Michele nao confunde");
+    console.assert(acharFamilia("Tio João e Tia Mari").nome === "João e Mari", "João desambiguado");
+    console.assert(acharFamilia("Tio Vitor e Tia Bruna").nome === "Vitor e Bruna", "Vitor+Bruna");
     console.assert(acharFamilia("Fulano de Tal").status === "nao_achou", "nao achou");
     console.assert(acharFamilia("").status === "vazio", "vazio");
     console.assert(EMAIL_RE.test("a@b.com") && !EMAIL_RE.test("a@b"), "email re");

@@ -381,7 +381,7 @@
     "Rafa e Juninho": { tamanho: "M" },
     "Gabriel e Camila": { tamanho: "G", apelidos: ["Camila Gibim"] },
     "Raiany e Manu": { tamanho: "G" },
-    "João e Raileny": { tamanho: "G" },
+    "João e Raileny": { tamanho: "G", apelidos: ["João Vitor Berardinelli"] },
     "Mario e Ranali": { tamanho: "G" },
     "Juan": { tamanho: "P" },
     "Júlia e Antony": { tamanho: "P" },
@@ -681,6 +681,7 @@
     console.assert(acharFamilia("Tia Michele").nome === "Michele", "Tia Michele nao confunde");
     console.assert(acharFamilia("Tio João e Tia Mari").nome === "João e Mari", "João desambiguado");
     console.assert(acharFamilia("João Jacomelli").nome === "João e Mari", "João Jacomelli por apelido");
+    console.assert(acharFamilia("João Vitor Berardinelli").nome === "João e Raileny", "João Vitor Berardinelli por apelido");
     console.assert(acharFamilia("Tio Vitor e Tia Bruna").nome === "Vitor e Bruna", "Vitor+Bruna");
     console.assert(acharFamilia("Tio Rodrigo e Tia Bruna").nome === "Rodrigo e Bruna", "Rodrigo+Bruna");
     console.assert(acharFamilia("Fulano de Tal").status === "nao_achou", "nao achou");

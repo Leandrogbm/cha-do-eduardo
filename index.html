@@ -373,7 +373,7 @@
     "Guilherme e Juliana": { tamanho: "M" },
     "Neja, Ana e Amanda": { tamanho: "M" },
     "João e Mari": { tamanho: "M", apelidos: ["João Jacomelli"] },
-    "Fabio e Amanda": { tamanho: "XG" },
+    "Fabio e Amanda": { tamanho: "XG", apelidos: ["Amanda Beltrame"] },
     "Daniel": { tamanho: "M" },
     "Everton": { tamanho: "M" },
     "Ricardo e Nicole": { tamanho: "M" },
@@ -671,6 +671,8 @@
     console.assert(acharFamilia("JÚLIA").nome === "Júlia e Antony", "sem acento/caixa");
     console.assert(acharFamilia("Camila").status === "ambiguo", "ambiguo");
     console.assert(acharFamilia("Camila Cavariani").nome === "Vitor e Camila", "sobrenome Cavariani");
+    console.assert(acharFamilia("Amanda Beltrame").nome === "Fabio e Amanda", "sobrenome Beltrame (Amanda do Fabio)");
+    console.assert(acharFamilia("Amanda Pimenta").nome === "Amanda Pimenta e Família", "sobrenome Pimenta (Amanda do Cleber)");
     console.assert(acharFamilia("Camila Gibim").nome === "Gabriel e Camila", "sobrenome Gibim");
     console.assert(acharFamilia("camila daher").nome === "Camila e Raphael", "sobrenome Daher");
     console.assert(acharFamilia("Gisele Facchim e Família").nome === "Gisele Facchim e Família", "chave exata composta");

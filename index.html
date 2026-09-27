@@ -237,7 +237,7 @@
         <div class="rule" aria-hidden="true">♥</div>
         <p class="lede">Nosso pequeno está chegando e queremos você ao nosso lado nesse dia especial. Contamos com a sua presença!</p>
         <div class="cd" id="cd">Faltam poucos dias 🦁</div>
-        <p class="cap" style="margin-top:6px">Confirme sua presença até <strong>17 de setembro</strong> 💛</p>
+        <p class="cap" style="margin-top:6px">Confirme sua presença até <strong id="prazo">17 de setembro</strong> 💛</p>
       </div>
 
       <div class="facts">
@@ -354,7 +354,7 @@
 
   // ponytail: uma linha por família, exatamente como está escrito no convite.
   // A pessoa faz login digitando o nome (casa por qualquer primeiro nome, sem acento/maiúscula).
-  // tamanho: "RN"|"P"|"M"|"G"|"XG"|"mimo". Opcional por família: pessoas (senão é estimado pelo nome).
+  // tamanho: "RN"|"P"|"M"|"G"|"XG"|"mimo". Opcional por família: pessoas (senão é estimado pelo nome), prazo (senão 17 de setembro).
   const FAMILIAS = {
     "Arthur e Karen": { tamanho: "G" },
     "Michele": { tamanho: "G" },
@@ -403,7 +403,7 @@
     "Rodrigo e Bruna": { tamanho: "P", pessoas: 3 },
     "Lucas e Heloisa": { tamanho: "RN", pessoas: 3 },
     "Alan e Paula": { tamanho: "M", pessoas: 3 },
-    "Tio Rafael e Tia Vanessa": { tamanho: "RN" },
+    "Tio Rafael e Tia Vanessa": { tamanho: "RN", prazo: "1º de outubro" },
   };
 
   const TAM = { RN: "recém-nascido", P: "pequeno", M: "médio", G: "grande", XG: "extra grande", mimo: "vai de mimo" };
@@ -553,6 +553,7 @@
     };
 
     $("greetFam").textContent = name;
+    $("prazo").textContent = info.prazo || "17 de setembro";
     $("nome").value = digitado && norm(digitado) !== norm(name) ? digitado : "";
     $("nome").placeholder = name;
     $("pessoas").value = inicial;

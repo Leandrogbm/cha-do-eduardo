@@ -359,19 +359,19 @@
     "Arthur e Karen": { tamanho: "G" },
     "Michele": { tamanho: "G" },
     "Oswaldo e Marcela": { tamanho: "P" },
-    "Vitor e Camila": { tamanho: "P", apelidos: ["Camila Cavariani"] },
+    "Vitor e Camila": { tamanho: "P", apelidos: ["Camila Cavariani", "Vitor Santoro"] },
     "Dinho e Fernanda": { tamanho: "XG" },
     "Aristide e Dani": { tamanho: "P" },
     "Felipe": { tamanho: "P" },
     "Vô Angelo e Vó Rose": { tamanho: "P" },
-    "Wilson, Carol, Antonella e Neto": { tamanho: "P", pessoas: 4 },
+    "Wilson, Carol, Antonella e Neto": { tamanho: "P", pessoas: 4, apelidos: ["Wilson Almeida", "Carol Bento", "Ana Carolina Almeida"] },
     "Bisa Lina": { tamanho: "RN" },
     "Biso Dino e Bisa Lidia": { tamanho: "RN" },
     "Vô Eraldo e Vó Luiza": { tamanho: "M" },
     "Beatriz e Bruno": { tamanho: "M" },
     "Fabiano e Renata": { tamanho: "M" },
     "Guilherme e Juliana": { tamanho: "M" },
-    "Neja, Ana e Amanda": { tamanho: "M" },
+    "Neja, Ana e Amanda": { tamanho: "M", apelidos: ["Amanda Lins"] },
     "João e Mari": { tamanho: "M", apelidos: ["João Jacomelli"] },
     "Fabio e Amanda": { tamanho: "XG", apelidos: ["Amanda Beltrame"] },
     "Daniel": { tamanho: "M" },
@@ -395,12 +395,11 @@
     "Amanda Pimenta e Família": { tamanho: "G", pessoas: 4 },
     "Tia Gisele": { tamanho: "G" },
     "Lívia Santi": { tamanho: "P" },
-    "Vitor e Bruna": { tamanho: "XG" },
-    "Fabio e Adriele": { tamanho: "M" },
+    "Vitor e Bruna": { tamanho: "XG", apelidos: ["Vitor Dionisio"] },
     "Tim e Ana": { tamanho: "XG" },
     "Aline e Gil": { tamanho: "M" },
     "Anathiele e Familia": { tamanho: "G", pessoas: 4 },
-    "Rodrigo e Bruna": { tamanho: "P", pessoas: 3 },
+    "Rodrigo e filho": { tamanho: "P", pessoas: 2 },
     "Lucas e Heloisa": { tamanho: "RN", pessoas: 3 },
     "Alan e Paula": { tamanho: "M", pessoas: 3 },
     "Tio Rafael e Tia Vanessa": { tamanho: "RN", prazo: "1º de outubro", apelidos: ["Rafael Gimenes", "Vanessa Gimenes"] },
@@ -687,7 +686,7 @@
     console.assert(acharFamilia("João Jacomelli").nome === "João e Mari", "João Jacomelli por apelido");
     console.assert(acharFamilia("João Vitor Berardinelli").nome === "João e Raileny", "João Vitor Berardinelli por apelido");
     console.assert(acharFamilia("Tio Vitor e Tia Bruna").nome === "Vitor e Bruna", "Vitor+Bruna");
-    console.assert(acharFamilia("Tio Rodrigo e Tia Bruna").nome === "Rodrigo e Bruna", "Rodrigo+Bruna");
+    console.assert(acharFamilia("Tio Rodrigo").nome === "Rodrigo e filho", "Rodrigo");
     console.assert(acharFamilia("Fulano de Tal").status === "nao_achou", "nao achou");
     console.assert(acharFamilia("").status === "vazio", "vazio");
     console.assert(EMAIL_RE.test("a@b.com") && !EMAIL_RE.test("a@b"), "email re");

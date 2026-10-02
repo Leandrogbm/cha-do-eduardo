@@ -54,12 +54,12 @@
   /* hero */
   .hero{display:flex; flex-direction:column; align-items:center; gap:4px; text-align:center}
   .badge{
-    width:94px; height:94px; margin-bottom:4px; border-radius:50%;
+    width:116px; height:116px; margin-bottom:4px; border-radius:50%;
     background:radial-gradient(circle at 50% 38%, #F6E7C9, #EAD3A9);
-    border:2px dashed #CBB98C; display:flex; align-items:center; justify-content:center;
-    font-size:44px; position:relative;
+    border:3px solid var(--card); box-shadow:0 0 0 2px #CBB98C; overflow:hidden;
+    display:flex; align-items:center; justify-content:center; position:relative;
   }
-  .badge .crown{position:absolute; top:-12px; font-size:22px; transform:rotate(-12deg)}
+  .badge img{width:100%; height:100%; object-fit:cover; object-position:50% 38%}
   .eyebrow{font:500 17px/1.2 Fraunces,Georgia,serif; color:var(--sage-deep); margin:0}
   .name{font:700 62px/.85 Caveat,"Segoe Script",cursive; color:var(--terra); margin:2px 0}
   .sub{font:400 14.5px/1.55 Nunito,sans-serif; color:var(--ink); max-width:30ch; margin:6px auto 0}
@@ -206,7 +206,7 @@
   <!-- ENTRAR -->
   <section id="gate" class="panel">
     <div class="hero">
-      <div class="badge"><span class="crown" aria-hidden="true">👑</span><span aria-hidden="true">🦁</span></div>
+      <div class="badge"><img src="tema-leao.png" alt="Leãozinho do Eduardo"></div>
       <p class="eyebrow">Chá de fraldas do</p>
       <h1 class="name">Eduardo</h1>
       <p class="sub">Entre com seu nome e e-mail para ver os detalhes do chá e confirmar. Ninguém vê a lista de convidados.</p>
@@ -230,7 +230,7 @@
   <section id="invite" class="panel" hidden>
     <div class="wrap">
       <div class="hero">
-        <div class="badge"><span class="crown" aria-hidden="true">👑</span><span aria-hidden="true">🦁</span></div>
+        <div class="badge"><img src="tema-leao.png" alt="Leãozinho do Eduardo"></div>
         <p class="eyebrow">Chá de fraldas do</p>
         <h1 class="name">Eduardo</h1>
         <p class="greet"><span class="fam" id="greetFam">Família</span><a href="#" id="trocar">Sair</a></p>
@@ -296,11 +296,9 @@
           </section>
 
           <section>
-            <h2 class="stitle">Presentear o Eduardo</h2>
-            <p class="txt">A lista está na <strong>Fralda e Cia</strong>. A partir de <strong>30 de setembro</strong> também haverá uma lista presencial na loja.</p>
-            <a class="btn btn-primary btn-full" href="https://www.fraldaecia.com.br/loja/print_lista.php?loja=979915&amp;id_lista=229" target="_blank" rel="noopener">🛒 Ver a lista de presentes</a>
+            <p class="txt" style="font-style:italic">Sua presença já é o que mais importa pra gente. 💛 Mas, caso alguém pergunte sobre sugestões, deixamos por aqui, sem compromisso: lista na <strong>Fralda e Cia</strong> (disponível também presencialmente, na loja) e uma chave Pix para quem preferir.</p>
+            <p class="cap"><a href="https://www.fraldaecia.com.br/loja/print_lista.php?loja=979915&amp;id_lista=229" target="_blank" rel="noopener">Ver lista de sugestões</a></p>
             <div class="pix">
-              <p class="txt">Se for mais cômodo presentear de outra forma, esta é a chave Pix (aleatória):</p>
               <code class="pixkey" id="pixkey">94bb2f33-80dd-4f28-9f96-0b7679141fff</code>
               <button type="button" class="btn btn-outline btn-full" id="btnPix">Copiar chave Pix</button>
             </div>
@@ -308,8 +306,9 @@
 
           <section>
             <h2 class="stitle">Como chegar</h2>
-            <p class="txt"><strong>Chácara Fest</strong> · Espaço <strong>Fantasia</strong> (a chácara tem dois espaços — o nosso é o Fantasia). Toque abaixo para abrir no mapa.</p>
-            <a class="btn btn-outline btn-full" id="btnMap" target="_blank" rel="noopener">📍 Ver no Google Maps</a>
+            <p class="txt"><strong>Chácara Fest</strong> · Espaço <strong>Fantasia</strong> (a chácara tem dois espaços — o nosso é o Fantasia). Toque para traçar a rota até lá.</p>
+            <a class="btn btn-primary btn-full" id="btnMap" target="_blank" rel="noopener">🧭 Rota pelo Google Maps</a>
+            <a class="btn btn-outline btn-full" id="btnWaze" target="_blank" rel="noopener" style="margin-top:10px">🧭 Rota pelo Waze</a>
           </section>
 
           <section>
@@ -339,6 +338,8 @@
   const CONFIG = {
     local: "Chácara Fest — Espaço Fantasia",
     mapa: "https://maps.app.goo.gl/EFTYpVYvFCFrNEpv6",
+    lat: -20.8929477,
+    lng: -49.3106461,
     quando: "2026-10-17T13:00:00-03:00",
 
     // ponytail: confirmação que escreve DIRETO na planilha, via Apps Script Web App.
@@ -500,6 +501,14 @@
     return CONFIG.mapa || "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(CONFIG.local);
   }
 
+  // ponytail: traça a rota até a chácara a partir de onde a pessoa estiver — Google Maps/Waze resolvem a origem pelo GPS do app
+  function rotaGoogleUrl() {
+    return "https://www.google.com/maps/dir/?api=1&destination=" + CONFIG.lat + "," + CONFIG.lng;
+  }
+  function rotaWazeUrl() {
+    return "https://waze.com/ul?ll=" + CONFIG.lat + "," + CONFIG.lng + "&navigate=yes";
+  }
+
   // ponytail: chute do nº de pessoas a partir do nome ("Nome e Nome" -> 2); a família ajusta no campo
   function contaPessoas(nome) {
     return Math.min(30, nome.split(/\s+e\s+|,\s*/).filter(Boolean).length) || 1;
@@ -628,7 +637,8 @@
     $("rsvpCap").textContent = "Ao confirmar, abrimos uma mensagem pronta no WhatsApp de quem você escolher acima.";
   }
 
-  $("btnMap").href = mapsUrl();
+  $("btnMap").href = rotaGoogleUrl();
+  $("btnWaze").href = rotaWazeUrl();
   $("cd").textContent = textoContagem(diasRestantes());
 
   $("btnPix").addEventListener("click", async () => {
@@ -694,6 +704,8 @@
     console.assert(waUrl("oi").indexOf("wa.me/" + CONTATOS[0].zap) > 0, "wa contato padrão");
     console.assert(waUrl("oi", "5518996165228").indexOf("wa.me/5518996165228") > 0, "wa contato escolhido");
     console.assert(mapsUrl() === CONFIG.mapa, "maps usa o link salvo");
+    console.assert(rotaGoogleUrl().includes(String(CONFIG.lat)) && rotaGoogleUrl().includes(String(CONFIG.lng)), "rota Google usa coordenadas");
+    console.assert(rotaWazeUrl().includes("navigate=yes") && rotaWazeUrl().includes(String(CONFIG.lat)), "rota Waze pede navegação");
     console.assert(diasRestantes(new Date("2026-10-16T13:00:00-03:00")) === 1, "amanha");
     console.assert(contaPessoas("Wilson, Carol, Antonella e Neto") === 4, "conta4");
     console.assert(limitaPessoas(9, 4) === 4, "não passa do teto");

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Como chegar – Chá do Eduardo</title>
+<style>
+  body{margin:0;background:#fde047;display:flex;justify-content:center}
+  .wrap{position:relative;width:100%;max-width:520px}
+  img{display:block;width:100%;height:auto}
+  /* áreas clicáveis sobre a imagem (em % para acompanhar o tamanho) */
+  a{position:absolute;border-radius:40px;-webkit-tap-highlight-color:rgba(255,255,255,.35)}
+  .btn{left:58.9%;top:83.3%;width:33.4%;height:6.1%}
+  .mapa{left:7%;top:29%;width:86%;height:41%;border-radius:24px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <img src="como-chegar.png" alt="Como chegar: Av. Osmar Evaristo Santana, 425 – São José do Rio Preto/SP">
+  <!-- ponytail: link fixo do Maps; botão = rota a partir de onde a pessoa está; trocar coordenadas se o local mudar -->
+  <a class="mapa" href="https://maps.app.goo.gl/EFTYpVYvFCFrNEpv6" aria-label="Abrir no Google Maps"></a>
+  <a class="btn" href="https://www.google.com/maps/dir/?api=1&destination=-20.8929477,-49.3106461" aria-label="Ver no Google Maps"></a>
+</div>
+</body>
+</html>
